@@ -118,7 +118,7 @@ endif()
 if(USE_ROS)
   # 声明 ROS 2 节点可执行文件
   # Declare ROS 2 node executable
-  add_executable(${PROJECT_NAME}_node src/qt6_ros_template_node.cpp)
+  add_executable(${PROJECT_NAME}_node src/qt6_ros2_template_node.cpp)
   ament_target_dependencies(${PROJECT_NAME}_node rclcpp std_msgs)
 
   # 【依赖项】如果添加了新的 ROS 2 依赖，在这里也要添加它们
