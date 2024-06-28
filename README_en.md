@@ -129,7 +129,7 @@ qt6_ros2_template/
 ├── CMakeLists.txt
 ├── package.xml
 ├── include/
-│   ├── qt6_ros_template/
+│   ├── qt6_ros2_template/
 │   └── mainwindow.h
 ├── msg/
 ├── resources/
@@ -140,7 +140,7 @@ qt6_ros2_template/
 ├── src/
 │   ├── main.cpp
 │   ├── mainwindow.cpp
-│   └── qt6_ros_template_node.cpp
+│   └── qt6_ros2_template_node.cpp
 ├── srv/
 ├── ui/
 │   └── mainwindow.ui

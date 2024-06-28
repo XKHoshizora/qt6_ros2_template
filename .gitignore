@@ -1,47 +1,47 @@
 # ROS 2 specific ignores
-     install/
-     log/
-     build/
+install/
+log/
+build/
 
-     # Qt specific ignores
-     *.user
-     *.autosave
+# Qt specific ignores
+*.user
+*.autosave
 
-     # Compiled Object files
-     *.slo
-     *.lo
-     *.o
-     *.obj
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
 
-     # Precompiled Headers
-     *.gch
-     *.pch
+# Precompiled Headers
+*.gch
+*.pch
 
-     # Compiled Dynamic libraries
-     *.so
-     *.dylib
-     *.dll
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
 
-     # Fortran module files
-     *.mod
-     *.smod
+# Fortran module files
+*.mod
+*.smod
 
-     # Compiled Static libraries
-     *.lai
-     *.la
-     *.a
-     *.lib
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
 
-     # Executables
-     *.exe
-     *.out
-     *.app
+# Executables
+*.exe
+*.out
+*.app
 
-     # Python byte code
-     *.pyc
+# Python byte code
+*.pyc
 
-     # Temporary files
-     *~
+# Temporary files
+*~
 
-     # macOS specific
-     .DS_Store
+# macOS specific
+.DS_Store
