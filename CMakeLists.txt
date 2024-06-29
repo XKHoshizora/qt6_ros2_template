@@ -4,12 +4,13 @@ cmake_minimum_required(VERSION 3.8)
 
 # 设置项目名称
 # Set the project name
-project(qt6_ros2_template)
+project(qt6_ros2_template VERSION 0.1 LANGUAGES CXX)
 
 # 设置 C++ 标准
 # Set C++ standard
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 # 设置编译选项
 # Set compilation options
@@ -73,14 +74,18 @@ if(USE_QT)
     set(CMAKE_AUTOMOC ON)
     set(CMAKE_AUTORCC ON)
     set(CMAKE_AUTOUIC ON)
+
+    # 设置 Qt UI 文件的搜索路径
+    # Set the search path for Qt UI files
     set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/ui)
 
     # 使用通配符查找所有头文件、源文件、UI 文件和资源文件
     # Use wildcards to find all header files, source files, UI files, and resource files
-    file(GLOB HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h)
-    file(GLOB SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp)
+    file(GLOB HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h *.hpp)
+    file(GLOB SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp *.c)
     file(GLOB UI_FILES ${CMAKE_CURRENT_SOURCE_DIR}/ui/*.ui)
     file(GLOB RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resources/*.qrc)
+    file(GLOB IMAGES ${CMAKE_CURRENT_SOURCE_DIR}/resources/images/*.jpg *.png *.svg)
 
     # 【新文件】如果添加了新的源文件、头文件、UI文件或资源文件，请确保它们被包含在上面的 GLOB 命令中
     # [New Files] Ensure that any new source, header, UI, or resource files are included in the GLOB commands above
@@ -92,6 +97,7 @@ if(USE_QT)
         ${SOURCES}
         ${UI_FILES}
         ${RESOURCES}
+        ${IMAGES}
     )
 
     # 链接 Qt 库
