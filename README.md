@@ -34,6 +34,9 @@
 
 - 集成 Qt6 和 ROS2，提供现代化的 UI 设计和强大的机器人开发能力
 - 双重编译支持：兼容 ROS2 的 `colcon build` 和 Qt Creator 的构建系统
+  - 可以在只有 ROS2 的环境下使用 `colcon build` 进行编译
+  - 可以在只有 Qt6 的环境下使用 Qt Creator 编译并打开项目
+  - 可以在 ROS2 和 Qt6 环境下同时使用 `colcon build` 或 Qt Creator 对项目进行编译
 - 无需复杂配置，可直接在 Qt Creator 中打开项目进行开发
 - 预配置的 CMakeLists.txt，简化了 Qt 和 ROS2 的集成过程
 - 包含基本的 ROS2 节点和 Qt 主窗口实现，可作为开发起点
@@ -42,17 +45,26 @@
 
 ## 系统要求
 
-- 操作系统：Ubuntu 22.04 LTS (Jammy Jellyfish)
-- ROS 版本：ROS2 Humble
+- 操作系统：Ubuntu 22.04 LTS (Jammy Jellyfish) 或更高
+- ROS 版本：ROS2 Humble 或更高
 - Qt 版本：6.x
 - CMake 版本：3.16 或更高
 
 ## 安装指南
 
-### 安装 ROS2 Humble
+### 安装 ROS2
 
-请按照 ROS2 Humble 的官方安装指南进行安装：
-[ROS2 Humble 安装指南](https://docs.ros.org/en/humble/Installation.html)
+1. 使用 Auto ROS Installer（推荐）：
+
+   ```bash
+   git clone https://github.com/XKHoshizora/auto-ros-installer.git
+   cd auto-ros-installer
+   ```
+
+   详细安装方法请查看[项目主页](https://github.com/XKHoshizora/auto-ros-installer)的说明。
+
+2. 请按照 ROS2 的官方安装指南进行安装(以 Humble 为例)：
+   [ROS2 Humble 安装指南](https://docs.ros.org/en/humble/Installation.html)
 
 ### 安装 Qt6
 
@@ -61,68 +73,133 @@
 1. 下载 Qt Installer：
    访问 [Qt 官方下载页面](https://www.qt.io/download-qt-installer)，下载适用于 Linux 的在线安装程序。
 
-2. 授予执行权限并运行安装程序：
+2. 授予执行权限：
 
    ```bash
-   chmod +x qt-unified-linux-x64-4.x.x-online.run
-   ./qt-unified-linux-x64-4.x.x-online.run
+   chmod +x qt-online-installer-linux-<x64/arm64>-<version>.run
    ```
 
-3. 在安装过程中，确保选择 Qt 6.x 和 Qt Creator。
+3. 运行安装程序：
 
-### 安装其他依赖
+   ```bash
+   ./qt-online-installer-linux-<x64/arm64>-<version>.run
+   ```
 
-如果遇到问题，可能需要安装以下依赖：
+4. 配置 Qt Creator 快捷方式：
+   使用以下命令创建并打开 `qtcreator` 文件
 
-```bash
-sudo apt install libxcb-xinerama0 libxcb-xinerama0-dev libxcb-cursor0
-```
+   ```bash
+   sudo nano /usr/bin/qtcreator
+   ```
+
+   向 `qtcreator` 文件中添加以下内容：
+
+   ```shell
+   #!/bin/sh
+
+   export QT_HOME=/home/<user>/Qt/Tools/QtCreator/bin
+   $QT_HOME/qtcreator $*
+   ```
+
+5. 为 `qtcreator` 文件添加可执行权限：
+
+   ```bash
+   sudo chmod a+x /usr/bin/
+   ```
+
+6. 启动 Qt Creator：
+
+   ```bash
+   qtcreator
+   ```
+
+7. 安装其他依赖
+
+   如果在运行 Qt Creator 时遇到问题，请安装以下依赖：
+
+   ```bash
+   sudo apt install libxcb-xinerama0 libxcb-xinerama0-dev libxcb-cursor0
+   ```
 
 ## 项目设置
 
 ### 创建工作空间
 
 ```bash
-mkdir -p ~/qt6_ros2_template_ws/src
-cd ~/qt6_ros2_template_ws/src
+mkdir -p ~/qt6_ws/src
+cd ~/qt6_ws/src
 ```
 
 ### 克隆项目
 
 ```bash
 git clone https://github.com/XKHoshizora/qt6_ros2_template.git
-cd qt6_ros2_template
 ```
 
 ### 构建项目
 
-1. 使用 colcon（ROS2 环境）：
+#### 单独的 ROS2 环境中
 
-   ```bash
-   cd ~/qt6_ros2_template_ws
-   colcon build --symlink-install
-   ```
+在你的工作空间内执行以下命令即可编译该功能包：
 
-2. 使用 Qt Creator：
-   - 打开 Qt Creator
-   - 选择 "File" > "Open File or Project"
-   - 导航到 `~/qt6_ros2_template_ws/src/qt6_ros2_template` 并选择 `CMakeLists.txt` 文件
-   - 配置项目并点击 "Build"
+```bash
+cd ~/qt6_ws
+colcon build --symlink-install
+```
+
+#### 在单独的 Qt6 环境中
+
+1. 打开 Qt Creator
+2. 选择 "File" > "Open File or Project"
+3. 导航到 `~/qt6_ws/src/qt6_ros_template` 目录中，选择 `CMakeLists.txt` 文件并打开
+4. 配置并打开项目，左侧可以正常显示项目文件，即说明编译成功。若编译失败，则只会显示一个 `CMakeLists.txt` 文件。
+
+#### 在 ROS2 和 Qt6 共存的环境中
+
+有两种编译方式：
+
+- 在你的工作空间内执行以下命令即可编译该功能包：
+
+  ```bash
+  cd ~/qt6_ws
+  colcon build --symlink-install
+  ```
+
+- 通过使用 Qt Creator 打开项目进行编译，步骤如下：
+  1.  打开 Qt Creator
+  2.  选择 "File" > "Open File or Project"
+  3.  导航到 `~/qt6_ws/src/qt6_ros_template` 目录中，选择 `CMakeLists.txt` 文件并打开
+  4.  配置并打开项目，左侧可以正常显示项目文件，即说明编译成功。若编译失败，则只会显示一个 `CMakeLists.txt` 文件。
 
 ## 运行项目
 
-1. 在 ROS2 环境中运行：
+### 单独的 ROS 环境中
 
-   ```bash
-   source ~/qt6_ros2_template_ws/install/setup.bash
-   ros2 launch qt6_ros2_template demo.launch.py
-   ```
+首先确保已经根据上面的步骤完成了编译。然后在工作空间下执行以下命令：
 
-2. 在 Qt Creator 中运行：
-   - 在 Qt Creator 中打开项目
-   - 点击 "Run" 按钮或按 Ctrl+R
+```bash
+source ~/qt6_ws/install/setup.bash
+ros2 launch qt6_ros2_template demo.launch.py
+```
+
+### 在单独的 Qt6 环境中
+
+通过 Qt Creator 编译并打开项目后，点击左侧绿色的 `Run` 按钮，或使用 `Ctrl + R` 快捷键运行。
+
+### 在 ROS 和 Qt6 共存的环境中
+
+首先确保已经根据上面的步骤完成了编译。然后在工作空间下执行以下命令：
+
+```bash
+source ~/qt6_ws/devel/setup.bash
+ros2 launch qt6_ros2_template demo.launch.py
+```
+
+或通过 Qt Creator 编译并打开项目后，点击左侧绿色的 `Run` 按钮，或使用 `Ctrl + R` 快捷键运行。
 
 ## 项目结构
+
+本项目使用了标准的 CMake 构建系统，并遵循了 Qt 项目的目录结构。
 
 ```
 qt6_ros2_template/
@@ -179,7 +256,7 @@ qt6_ros2_template/
 
 - 0.1.0
   - 初始版本
-  - 基本的 Qt6 和 ROS2 Humble 集成
+  - 基本的 Qt6 和 ROS2 集成
   - 实现了双重编译支持（ROS2 环境和 Qt Creator）
 
 ## 许可证
