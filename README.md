@@ -63,7 +63,7 @@
 
    详细安装方法请查看[项目主页](https://github.com/XKHoshizora/auto-ros-installer)的说明。
 
-2. 请按照 ROS2 的官方安装指南进行安装(以 Humble 为例)：
+2. 请按照 ROS2 的官方安装指南进行安装（以 Humble 为例）：
    [ROS2 Humble 安装指南](https://docs.ros.org/en/humble/Installation.html)
 
 ### 安装 Qt6
