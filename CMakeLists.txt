@@ -111,7 +111,7 @@ if(USE_QT)
     # 如果在 ROS 环境中，添加 ROS 依赖
     # If in ROS environment, add ROS dependencies
     if(USE_ROS)
-        ament_target_dependencies(${PROJECT_NAME} rclcpp std_msgs)
+        target_link_libraries(${PROJECT_NAME} PRIVATE rclcpp std_msgs)
 
         # 【依赖项】如果添加了新的 ROS 2 依赖，在这里添加它们
         # [Dependencies] Add new ROS 2 dependencies here if added
