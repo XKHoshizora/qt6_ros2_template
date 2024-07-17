@@ -268,3 +268,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 Project Maintainer: Hoshizora - hoshizoranihon@gmail.com
 
 Project Link: [https://github.com/XKHoshizora/qt6_ros2_template](https://github.com/XKHoshizora/qt6_ros2_template)
+
+## Star History
+
+[![Star History Chart](https://api.star-history.com/svg?repos=XKHoshizora/qt6_ros_template,XKHoshizora/qt6_ros2_template&type=Date)](https://star-history.com/#XKHoshizora/qt6_ros_template&XKHoshizora/qt6_ros2_template&Date)
