@@ -271,4 +271,4 @@ Project Link: [https://github.com/XKHoshizora/qt6_ros2_template](https://github.
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=XKHoshizora/qt6_ros_template,XKHoshizora/qt6_ros2_template&type=Date)](https://star-history.com/#XKHoshizora/qt6_ros_template&XKHoshizora/qt6_ros2_template&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=XKHoshizora/qt6_ros2_template&type=Date)](https://star-history.com/#XKHoshizora/qt6_ros2_template&Date)
