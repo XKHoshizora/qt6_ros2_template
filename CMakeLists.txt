@@ -46,10 +46,21 @@ if(USE_QT)
     set(CMAKE_AUTOUIC ON)
     set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_CURRENT_SOURCE_DIR}/ui)
 
-    file(GLOB HEADERS ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h *.hpp)
-    file(GLOB SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp *.c)
-    file(GLOB UI_FILES ${CMAKE_CURRENT_SOURCE_DIR}/ui/*.ui)
-    file(GLOB RESOURCES ${CMAKE_CURRENT_SOURCE_DIR}/resources/*.qrc)
+    # 递归收集源文件并使用 CONFIGURE_DEPENDS，这样在 Qt Creator 中
+    # 新建/复制类文件（含子目录、.hpp 等）时无需手动修改本文件，
+    # 重新构建即可自动识别并显示在工程视图中。
+    file(GLOB_RECURSE HEADERS CONFIGURE_DEPENDS
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/*.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/include/*.hpp
+    )
+    file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cxx
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/*.c
+    )
+    file(GLOB UI_FILES CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/ui/*.ui)
+    file(GLOB RESOURCES CONFIGURE_DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/resources/*.qrc)
 
     add_executable(${PROJECT_NAME}
         ${HEADERS}
