@@ -10,9 +10,11 @@ MainWindow::MainWindow(QWidget *parent)
 
 MainWindow::~MainWindow() {
     delete ui;
+#ifdef USE_ROS
     if (rclcpp::ok()) {
         rclcpp::shutdown();
     }
+#endif
 }
 
 void MainWindow::setupConnections() {
@@ -23,9 +25,11 @@ void MainWindow::setupConnections() {
 }
 
 void MainWindow::initROS() {
+#ifdef USE_ROS
     rclcpp::init(0, nullptr);
     node_ = std::make_shared<rclcpp::Node>("qt_ros2_node");
     publisher_ = node_->create_publisher<std_msgs::msg::String>("topic", 10);
+#endif
 }
 
 void MainWindow::onConnectButtonClicked() {
@@ -41,6 +45,7 @@ void MainWindow::onConnectButtonClicked() {
 }
 
 void MainWindow::onPublishTimer() {
+#ifdef USE_ROS
     if (!rclcpp::ok()) {
         QMessageBox::critical(this, "ROS Error", "ROS is not running!");
         publishTimer_->stop();
@@ -53,4 +58,9 @@ void MainWindow::onPublishTimer() {
 
     ui->view_logging->addItem(QString::fromStdString("Published: " + message.data));
     rclcpp::spin_some(node_);
+#else
+    // No ROS at build time: run as a plain Qt app so the dual-build still works.
+    ui->view_logging->addItem(QString::fromStdString(
+        "Published (no ROS): Hello, ROS 2! " + std::to_string(count_++)));
+#endif
 }

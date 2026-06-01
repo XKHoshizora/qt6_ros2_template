@@ -6,8 +6,11 @@
 #include <QListWidget>
 #include <QMessageBox>
 #include <memory>
+
+#ifdef USE_ROS
 #include <rclcpp/rclcpp.hpp>
 #include <std_msgs/msg/string.hpp>
+#endif
 
 namespace Ui {
 class MainWindow;
@@ -26,8 +29,10 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+#ifdef USE_ROS
     std::shared_ptr<rclcpp::Node> node_;
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
+#endif
     QTimer *publishTimer_;
     size_t count_;
 
